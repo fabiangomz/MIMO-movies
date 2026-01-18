@@ -4,23 +4,33 @@ import {
   createPaginationMetadata,
   parsePaginationParams,
 } from "../utils/pagination";
-import { serializeMovie, serializeMovies } from "../utils/serializers";
+import {
+  serializeMovieWithRating,
+  serializeMoviesWithRating,
+} from "../utils/serializers";
 
 export const moviesController = {
   async getAllMovies(req: Request, res: Response): Promise<void> {
     const { page, limit } = parsePaginationParams(req.query);
 
-    const result = await MovieModel.findAll({ page, limit });
-    const serializedMovies = serializeMovies(result.rows);
+    const result = await MovieModel.findAllWithRating({ page, limit });
+    const serializedMovies = serializeMoviesWithRating(result.rows);
     const pagination = createPaginationMetadata(page, limit, result.count);
     res.status(200).json({ data: serializedMovies, pagination });
   },
 
   async getMovie(req: Request, res: Response): Promise<void> {
     const movieId = parseInt(req.params.id, 10);
-    const movie = await MovieModel.findById(movieId);
+
+    if (isNaN(movieId)) {
+      res.status(400).json({ error: "Invalid movie ID" });
+      console.log("aqui");
+      return;
+    }
+
+    const movie = await MovieModel.findByIdWithRating(movieId);
     if (movie) {
-      res.status(200).json(movie);
+      res.status(200).json(serializeMovieWithRating(movie));
       return;
     }
 

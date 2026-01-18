@@ -1,21 +1,78 @@
-import { Movie } from "../db";
+import { Rating, WatchlistItem } from "../db";
+import { MovieWithRating } from "../models/movie";
+import { WatchlistItemWithMovie } from "../models/watchlistItem";
 
-export interface SerializedMovie {
+export interface SerializedMovieWithRating {
   id: number;
   title: string;
   genre: string;
   duration: number;
+  rating: number | null;
 }
 
-export function serializeMovie(movie: Movie): SerializedMovie {
+export function serializeMovieWithRating(
+  movie: MovieWithRating,
+): SerializedMovieWithRating {
   return {
-    id: movie.id,
+    id: movie.id!,
     title: movie.title,
     genre: movie.genre,
     duration: movie.duration,
+    rating: movie.rating,
   };
 }
 
-export const serializeMovies = (movies: Movie[]): SerializedMovie[] => {
-  return movies.map(serializeMovie);
-};
+export function serializeMoviesWithRating(
+  movies: MovieWithRating[],
+): SerializedMovieWithRating[] {
+  return movies.map(serializeMovieWithRating);
+}
+
+export interface SerializedRating {
+  id: number;
+  movieId: number;
+  userId: number;
+  rating: number;
+  comment: string | null;
+  createdAt: Date;
+}
+export function serializeRating(rating: Rating): SerializedRating {
+  return {
+    id: rating.id,
+    movieId: rating.movieId,
+    userId: rating.userId,
+    rating: rating.rating,
+    comment: rating.comment,
+    createdAt: rating.createdAt,
+  };
+}
+
+export function serializeRatings(ratings: Rating[]): SerializedRating[] {
+  return ratings.map(serializeRating);
+}
+
+export interface SerializedWatchlistItem {
+  id: number;
+  userId: number;
+  movieId: number;
+  watched: boolean;
+  createdAt?: Date;
+}
+
+export function serializeWatchlistItem(
+  watchlistItem: WatchlistItemWithMovie,
+): SerializedWatchlistItem {
+  return {
+    id: watchlistItem.id!,
+    userId: watchlistItem.userId,
+    movieId: watchlistItem.movieId,
+    watched: watchlistItem.watched,
+    createdAt: watchlistItem.createdAt,
+  };
+}
+
+export function serializeWatchlist(
+  watchlist: WatchlistItemWithMovie[],
+): SerializedWatchlistItem[] {
+  return watchlist.map(serializeWatchlistItem);
+}
