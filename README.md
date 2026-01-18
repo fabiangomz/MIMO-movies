@@ -23,7 +23,7 @@ mimo-movies/
 │   │   ├── movies.ts
 │   │   ├── ratings.ts
 │   │   └── watchlist.ts
-│   ├── middlewares/           # ❌ TODO: Middlewares
+│   ├── middlewares/           # 🔁 TODO: Middlewares
 │   │   ├── errorHandler.ts
 │   │   ├── notFoundHandler.ts
 │   │   ├── verifyApiKey.ts
