@@ -1,4 +1,4 @@
-import { Rating, WatchlistItem } from "../db";
+import { Rating } from "../db";
 import { MovieWithRating } from "../models/movie";
 import { WatchlistItemWithMovie } from "../models/watchlistItem";
 
@@ -53,8 +53,8 @@ export function serializeRatings(ratings: Rating[]): SerializedRating[] {
 
 export interface SerializedWatchlistItem {
   id: number;
-  userId: number;
   movieId: number;
+  title: string;
   watched: boolean;
   createdAt?: Date;
 }
@@ -64,8 +64,8 @@ export function serializeWatchlistItem(
 ): SerializedWatchlistItem {
   return {
     id: watchlistItem.id!,
-    userId: watchlistItem.userId,
     movieId: watchlistItem.movieId,
+    title: watchlistItem.title,
     watched: watchlistItem.watched,
     createdAt: watchlistItem.createdAt,
   };
