@@ -54,14 +54,14 @@ describe("Movies Endpoints", () => {
       const response = await request(app).get("/movies/99999");
 
       expect(response.status).toBe(404);
-      expect(response.body).toHaveProperty("message", "Movie not found");
+      expect(response.body).toHaveProperty("error", "Movie not found");
     });
 
     it("should return 404 for invalid movie id", async () => {
       const response = await request(app).get("/movies/invalid");
 
       expect(response.status).toBe(404);
-      expect(response.body).toHaveProperty("message", "Movie not found");
+      expect(response.body).toHaveProperty("error", "Movie not found");
     });
   });
 });

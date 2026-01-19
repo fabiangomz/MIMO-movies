@@ -28,7 +28,7 @@ describe("Watchlist Endpoints", () => {
         .set("x-api-key", API_KEY_USER_1);
 
       expect(response.status).toBe(403);
-      expect(response.body).toHaveProperty("message", "Forbidden");
+      expect(response.body).toHaveProperty("error", "Forbidden");
     });
 
     it("should return 404 for non-existent user", async () => {
@@ -37,7 +37,7 @@ describe("Watchlist Endpoints", () => {
         .set("x-api-key", API_KEY_USER_1);
 
       expect(response.status).toBe(404);
-      expect(response.body).toHaveProperty("message", "User not found");
+      expect(response.body).toHaveProperty("error", "User not found");
     });
 
     it("should return watchlist items with correct fields", async () => {
@@ -82,7 +82,7 @@ describe("Watchlist Endpoints", () => {
         .send({ movieId: 1 });
 
       expect(response.status).toBe(403);
-      expect(response.body).toHaveProperty("message", "Forbidden");
+      expect(response.body).toHaveProperty("error", "Forbidden");
     });
 
     it("should return 404 for non-existent movie", async () => {
@@ -92,7 +92,7 @@ describe("Watchlist Endpoints", () => {
         .send({ movieId: 99999 });
 
       expect(response.status).toBe(404);
-      expect(response.body).toHaveProperty("message", "Movie not found");
+      expect(response.body).toHaveProperty("error", "Movie not found");
     });
 
     it("should return 422 for invalid payload", async () => {
@@ -120,7 +120,7 @@ describe("Watchlist Endpoints", () => {
       } else {
         expect(response.status).toBe(409);
         expect(response.body).toHaveProperty(
-          "message",
+          "error",
           "Movie already in watchlist",
         );
       }
@@ -153,7 +153,7 @@ describe("Watchlist Endpoints", () => {
 
       expect(response.status).toBe(404);
       expect(response.body).toHaveProperty(
-        "message",
+        "error",
         "Watchlist item not found",
       );
     });
@@ -190,7 +190,7 @@ describe("Watchlist Endpoints", () => {
 
       expect(response.status).toBe(404);
       expect(response.body).toHaveProperty(
-        "message",
+        "error",
         "Watchlist item not found",
       );
     });

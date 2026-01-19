@@ -21,18 +21,18 @@ export const watchlistController = {
     const userId = parseInt(req.params.userId, 10);
 
     if (isNaN(userId)) {
-      res.status(404).json({ message: "User not found" });
+      res.status(404).json({ error: "User not found" });
       return;
     }
 
     const user = await UserModel.findById(userId);
     if (!user) {
-      res.status(404).json({ message: "User not found" });
+      res.status(404).json({ error: "User not found" });
       return;
     }
 
     if (authReq.userId !== userId) {
-      res.status(403).json({ message: "Forbidden" });
+      res.status(403).json({ error: "Forbidden" });
       return;
     }
 
@@ -52,18 +52,18 @@ export const watchlistController = {
     const userId = parseInt(req.params.userId, 10);
 
     if (isNaN(userId)) {
-      res.status(404).json({ message: "User not found" });
+      res.status(404).json({ error: "User not found" });
       return;
     }
 
     const user = await UserModel.findById(userId);
     if (!user) {
-      res.status(404).json({ message: "User not found" });
+      res.status(404).json({ error: "User not found" });
       return;
     }
 
     if (authReq.userId !== userId) {
-      res.status(403).json({ message: "Forbidden" });
+      res.status(403).json({ error: "Forbidden" });
       return;
     }
 
@@ -71,7 +71,7 @@ export const watchlistController = {
 
     const movie = await MovieModel.findById(movieId);
     if (!movie) {
-      res.status(404).json({ message: "Movie not found" });
+      res.status(404).json({ error: "Movie not found" });
       return;
     }
 
@@ -80,7 +80,7 @@ export const watchlistController = {
       movieId,
     );
     if (existingItem) {
-      res.status(409).json({ message: "Movie already in watchlist" });
+      res.status(409).json({ error: "Movie already in watchlist" });
       return;
     }
 
@@ -105,28 +105,28 @@ export const watchlistController = {
     const itemId = parseInt(req.params.itemId, 10);
 
     if (isNaN(userId)) {
-      res.status(404).json({ message: "User not found" });
+      res.status(404).json({ error: "User not found" });
       return;
     }
     if (isNaN(itemId)) {
-      res.status(404).json({ message: "Watchlist item not found" });
+      res.status(404).json({ error: "Watchlist item not found" });
       return;
     }
 
     const user = await UserModel.findById(userId);
     if (!user) {
-      res.status(404).json({ message: "User not found" });
+      res.status(404).json({ error: "User not found" });
       return;
     }
 
     if (authReq.userId !== userId) {
-      res.status(403).json({ message: "Forbidden" });
+      res.status(403).json({ error: "Forbidden" });
       return;
     }
 
     const item = await WatchlistItemModel.findByIdAndUserId(itemId, userId);
     if (!item) {
-      res.status(404).json({ message: "Watchlist item not found" });
+      res.status(404).json({ error: "Watchlist item not found" });
       return;
     }
 
@@ -156,28 +156,28 @@ export const watchlistController = {
     const itemId = parseInt(req.params.itemId, 10);
 
     if (isNaN(userId)) {
-      res.status(404).json({ message: "User not found" });
+      res.status(404).json({ error: "User not found" });
       return;
     }
     if (isNaN(itemId)) {
-      res.status(404).json({ message: "Watchlist item not found" });
+      res.status(404).json({ error: "Watchlist item not found" });
       return;
     }
 
     const user = await UserModel.findById(userId);
     if (!user) {
-      res.status(404).json({ message: "User not found" });
+      res.status(404).json({ error: "User not found" });
       return;
     }
 
     if (authReq.userId !== userId) {
-      res.status(403).json({ message: "Forbidden" });
+      res.status(403).json({ error: "Forbidden" });
       return;
     }
 
     const item = await WatchlistItemModel.findByIdAndUserId(itemId, userId);
     if (!item) {
-      res.status(404).json({ message: "Watchlist item not found" });
+      res.status(404).json({ error: "Watchlist item not found" });
       return;
     }
 

@@ -16,13 +16,13 @@ export const ratingsController = {
     const movieId = parseInt(req.params.movieId, 10);
 
     if (isNaN(movieId)) {
-      res.status(404).json({ message: "Movie not found" });
+      res.status(404).json({ error: "Movie not found" });
       return;
     }
 
     const movie = await MovieModel.findById(movieId);
     if (!movie) {
-      res.status(404).json({ message: "Movie not found" });
+      res.status(404).json({ error: "Movie not found" });
       return;
     }
 
@@ -39,24 +39,24 @@ export const ratingsController = {
     const ratingId = parseInt(req.params.ratingId, 10);
 
     if (isNaN(movieId)) {
-      res.status(404).json({ message: "Movie not found" });
+      res.status(404).json({ error: "Movie not found" });
       return;
     }
 
     if (isNaN(ratingId)) {
-      res.status(404).json({ message: "Rating not found" });
+      res.status(404).json({ error: "Rating not found" });
       return;
     }
 
     const movie = await MovieModel.findById(movieId);
     if (!movie) {
-      res.status(404).json({ message: "Movie not found" });
+      res.status(404).json({ error: "Movie not found" });
       return;
     }
 
     const rating = await RatingModel.findByIdAndMovieId(ratingId, movieId);
     if (!rating) {
-      res.status(404).json({ message: "Rating not found" });
+      res.status(404).json({ error: "Rating not found" });
       return;
     }
 
@@ -68,13 +68,13 @@ export const ratingsController = {
     const userId = (req as AuthenticatedRequest).userId;
 
     if (isNaN(movieId)) {
-      res.status(404).json({ message: "Movie not found" });
+      res.status(404).json({ error: "Movie not found" });
       return;
     }
 
     const movie = await MovieModel.findById(movieId);
     if (!movie) {
-      res.status(404).json({ message: "Movie not found" });
+      res.status(404).json({ error: "Movie not found" });
       return;
     }
 
@@ -84,7 +84,7 @@ export const ratingsController = {
       movieId,
     );
     if (existingRating) {
-      res.status(409).json({ message: "User has already rated this movie" });
+      res.status(409).json({ error: "User has already rated this movie" });
       return;
     }
 
@@ -106,29 +106,29 @@ export const ratingsController = {
     const userId = (req as AuthenticatedRequest).userId;
 
     if (isNaN(movieId)) {
-      res.status(404).json({ message: "Movie not found" });
+      res.status(404).json({ error: "Movie not found" });
       return;
     }
 
     if (isNaN(ratingId)) {
-      res.status(404).json({ message: "Rating not found" });
+      res.status(404).json({ error: "Rating not found" });
       return;
     }
 
     const movie = await MovieModel.findById(movieId);
     if (!movie) {
-      res.status(404).json({ message: "Movie not found" });
+      res.status(404).json({ error: "Movie not found" });
       return;
     }
 
     const rating = await RatingModel.findByIdAndMovieId(ratingId, movieId);
     if (!rating) {
-      res.status(404).json({ message: "Rating not found" });
+      res.status(404).json({ error: "Rating not found" });
       return;
     }
 
     if (rating.userId !== userId) {
-      res.status(403).json({ message: "Forbidden" });
+      res.status(403).json({ error: "Forbidden" });
       return;
     }
 
@@ -148,29 +148,29 @@ export const ratingsController = {
     const userId = (req as AuthenticatedRequest).userId;
 
     if (isNaN(movieId)) {
-      res.status(404).json({ message: "Movie not found" });
+      res.status(404).json({ error: "Movie not found" });
       return;
     }
 
     if (isNaN(ratingId)) {
-      res.status(404).json({ message: "Rating not found" });
+      res.status(404).json({ error: "Rating not found" });
       return;
     }
 
     const movie = await MovieModel.findById(movieId);
     if (!movie) {
-      res.status(404).json({ message: "Movie not found" });
+      res.status(404).json({ error: "Movie not found" });
       return;
     }
 
     const rating = await RatingModel.findByIdAndMovieId(ratingId, movieId);
     if (!rating) {
-      res.status(404).json({ message: "Rating not found" });
+      res.status(404).json({ error: "Rating not found" });
       return;
     }
 
     if (rating.userId !== userId) {
-      res.status(403).json({ message: "Forbidden" });
+      res.status(403).json({ error: "Forbidden" });
       return;
     }
 

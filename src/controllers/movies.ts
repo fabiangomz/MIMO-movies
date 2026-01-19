@@ -23,7 +23,7 @@ export const moviesController = {
     const movieId = parseInt(req.params.id, 10);
 
     if (isNaN(movieId)) {
-      res.status(404).json({ message: "Movie not found" });
+      res.status(404).json({ error: "Movie not found" });
       return;
     }
 
@@ -33,6 +33,6 @@ export const moviesController = {
       return;
     }
 
-    res.status(404).json({ message: "Movie not found" });
+    res.status(404).json({ error: "Movie not found" });
   },
 };

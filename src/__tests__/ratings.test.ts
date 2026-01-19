@@ -19,7 +19,7 @@ describe("Ratings Endpoints", () => {
       const response = await request(app).get("/movies/99999/ratings");
 
       expect(response.status).toBe(404);
-      expect(response.body).toHaveProperty("message", "Movie not found");
+      expect(response.body).toHaveProperty("error", "Movie not found");
     });
 
     it("should return ratings with correct fields", async () => {
@@ -54,14 +54,14 @@ describe("Ratings Endpoints", () => {
       const response = await request(app).get("/movies/1/ratings/99999");
 
       expect(response.status).toBe(404);
-      expect(response.body).toHaveProperty("message", "Rating not found");
+      expect(response.body).toHaveProperty("error", "Rating not found");
     });
 
     it("should return 404 for non-existent movie", async () => {
       const response = await request(app).get("/movies/99999/ratings/1");
 
       expect(response.status).toBe(404);
-      expect(response.body).toHaveProperty("message", "Movie not found");
+      expect(response.body).toHaveProperty("error", "Movie not found");
     });
   });
 
@@ -81,7 +81,7 @@ describe("Ratings Endpoints", () => {
         .send({ rating: 4, comment: "Great movie!" });
 
       expect(response.status).toBe(404);
-      expect(response.body).toHaveProperty("message", "Movie not found");
+      expect(response.body).toHaveProperty("error", "Movie not found");
     });
 
     it("should return 422 for invalid rating value", async () => {
