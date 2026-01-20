@@ -9,7 +9,6 @@ export const app = express();
 
 app.use(express.json());
 app.use(respondTo("application/json"));
-app.use(errorHandler);
 app.use("/movies", movieRoutes);
 app.use("/watchlist", watchListRoutes);
 app.use(notFoundHandler);

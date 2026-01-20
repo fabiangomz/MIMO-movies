@@ -1,4 +1,4 @@
-import { Request, Response } from "express";
+import { NextFunction, Request, Response } from "express";
 import { MovieModel } from "../models/movie";
 import {
   createPaginationMetadata,
@@ -9,30 +9,50 @@ import {
   serializeMoviesWithRating,
 } from "../utils/serializers";
 
-export const moviesController = {
-  async getAllMovies(req: Request, res: Response): Promise<void> {
-    const { page, limit } = parsePaginationParams(req.query);
+import { AppError } from "../middlewares/errorHandler";
 
-    const result = await MovieModel.findAllWithRating({ page, limit });
-    const serializedMovies = serializeMoviesWithRating(result.rows);
-    const pagination = createPaginationMetadata(page, limit, result.count);
-    res.status(200).json({ data: serializedMovies, pagination });
+export const moviesController = {
+  async getAllMovies(
+    req: Request,
+    res: Response,
+    next: NextFunction,
+  ): Promise<void> {
+    try {
+      const { page, limit } = parsePaginationParams(req.query);
+      const result = await MovieModel.findAllWithRating({ page, limit });
+      const serializedMovies = serializeMoviesWithRating(result.rows);
+      const pagination = createPaginationMetadata(page, limit, result.count);
+      res.status(200).json({ data: serializedMovies, pagination });
+    } catch (err) {
+      next(err);
+    }
   },
 
-  async getMovie(req: Request, res: Response): Promise<void> {
-    const movieId = parseInt(req.params.id, 10);
+  async getMovie(
+    req: Request,
+    res: Response,
+    next: NextFunction,
+  ): Promise<void> {
+    try {
+      const movieId = Number(req.params.id);
 
-    if (isNaN(movieId)) {
-      res.status(404).json({ error: "Movie not found" });
-      return;
+      if (isNaN(movieId)) {
+        const error: AppError = new Error("Movie not found");
+        error.statusCode = 404;
+        throw error;
+      }
+
+      const movie = await MovieModel.findByIdWithRating(movieId);
+
+      if (!movie) {
+        const error: AppError = new Error("Movie not found");
+        error.statusCode = 404;
+        throw error;
+      }
+
+      res.json(serializeMovieWithRating(movie));
+    } catch (err) {
+      next(err);
     }
-
-    const movie = await MovieModel.findByIdWithRating(movieId);
-    if (movie) {
-      res.status(200).json(serializeMovieWithRating(movie));
-      return;
-    }
-
-    res.status(404).json({ error: "Movie not found" });
   },
 };
